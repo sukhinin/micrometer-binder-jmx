@@ -61,7 +61,7 @@ public class BindingContext {
 
     private Double getAttributeValueOrUnbindMeter(MeterRegistry registry, AtomicReference<? extends Meter> meterRef, ObjectName obj, String attrName) {
         try {
-            return (Double) mBeanServer.getAttribute(obj, attrName);
+            return ((Number) mBeanServer.getAttribute(obj, attrName)).doubleValue();
         } catch (ClassCastException | JMException e) {
             registry.remove(meterRef.get());
             return Double.NaN;
