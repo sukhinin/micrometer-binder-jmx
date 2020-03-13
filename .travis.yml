@@ -1,0 +1,15 @@
+language: java
+os: linux
+jdk: openjdk8
+
+branches:
+  except:
+    - gh-pages
+
+deploy:
+  - provider: script
+    script: ./gradlew bintrayUpload
+    skip_cleanup: true
+    on:
+      branch: master
+      tags: true
