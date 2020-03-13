@@ -23,20 +23,24 @@ Micrometer to JMX. It is expected that the library will not be limited to Kafka 
 support other metrics exposed via JMX hence no Kafka reference in library name.
 
 ## Collecting Kafka consumer and producer metrics
-Collecting consumer and producer metrics is as simple as calling `bindTo()` method:
+Setting up consumer and producer metrics collection is as simple as calling `bindTo()` method:
 ```java
 // Bind consumer metrics to global meter registry
-new KafkaConsumerMetrics().bindTo(Metrics.globalRegistry);
+KafkaConsumerMetrics binder = new KafkaConsumerMetrics();
+binder.bindTo(Metrics.globalRegistry);
 ```
 ```java
 // Bind producer metrics to global meter registry
-new KafkaProducerMetrics().bindTo(Metrics.globalRegistry);
+KafkaProducerMetrics binder = new KafkaProducerMetrics();
+binder.bindTo(Metrics.globalRegistry);
 ```
 
 It does not matter if you call the `bindTo()` method before or after creating consumers
 and producers: the binding implementation will register existing MBeans and subscribe to new 
 MBean change notifications. However, calling `bindTo()` while creating consumers or producers 
 on the other thread can lead to a race condition and should be avoided.
+
+Do not forget to `close()` the binder when it is no longer needed.
 
 ## Implementing custom JMX meter binders
 To implement a custom Micrometer binder you should create `JmxMeterBinder` instance 
