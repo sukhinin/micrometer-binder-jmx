@@ -22,6 +22,10 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:3.3.0'
 }
 
+java {
+    withSourcesJar()
+}
+
 test {
     useJUnitPlatform()
 }
@@ -29,4 +33,51 @@ test {
 jgitver {
     useDirty true
     useGitCommitID true
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            pom {
+                name = project.name
+                description = project.description
+                url = 'https://github.com/sukhinin/micrometer-binder-jmx'
+                licenses {
+                    license {
+                        name = 'Apache-2.0'
+                        url = 'https://github.com/sukhinin/micrometer-binder-jmx/blob/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'sukhinin'
+                        name = 'Boris Sukhinin'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/sukhinin/micrometer-binder-jmx.git'
+                    developerConnection = 'scm:git:https://github.com/sukhinin/micrometer-binder-jmx.git'
+                    url = 'https://github.com/sukhinin/micrometer-binder-jmx'
+                }
+            }
+        }
+    }
+}
+
+bintray {
+    user = project.findProperty('bintray.user') ?: System.getenv('BINTRAY_USER')
+    key = project.findProperty('bintray.apikey') ?: System.getenv('BINTRAY_APIKEY')
+    publications = ['maven']
+    pkg {
+        repo = 'maven'
+        name = project.name
+        desc = project.description
+        websiteUrl = 'https://github.com/sukhinin/micrometer-binder-jmx'
+        issueTrackerUrl = 'https://github.com/sukhinin/micrometer-binder-jmx/issues'
+        vcsUrl = 'https://github.com/sukhinin/micrometer-binder-jmx.git'
+        licenses = ['Apache-2.0']
+        labels = ['micrometer', 'jmx', 'kafka']
+        githubRepo = 'sukhinin/micrometer-binder-jmx'
+    }
 }
