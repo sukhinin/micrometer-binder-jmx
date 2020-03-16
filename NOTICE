@@ -1,4 +1,10 @@
+Micrometer JMX bindings
 Copyright 2020 Boris Sukhinin
+
+The code is loosely based on Micrometer Kafka binder (Apache 2.0)
+* Copyright 2018 Pivotal Software, Inc.
+* https://github.com/micrometer-metrics/micrometer
+
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
