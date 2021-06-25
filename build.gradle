@@ -1,7 +1,6 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'com.jfrog.bintray' version '1.8.4'
     id 'fr.brouillard.oss.gradle.jgitver' version '0.6.1'
 }
 
@@ -12,7 +11,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    jcenter()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -62,22 +62,5 @@ publishing {
                 }
             }
         }
-    }
-}
-
-bintray {
-    user = project.findProperty('bintray.user') ?: System.getenv('BINTRAY_USER')
-    key = project.findProperty('bintray.apikey') ?: System.getenv('BINTRAY_APIKEY')
-    publications = ['maven']
-    pkg {
-        repo = 'maven'
-        name = project.name
-        desc = project.description
-        websiteUrl = 'https://github.com/sukhinin/micrometer-binder-jmx'
-        issueTrackerUrl = 'https://github.com/sukhinin/micrometer-binder-jmx/issues'
-        vcsUrl = 'https://github.com/sukhinin/micrometer-binder-jmx.git'
-        licenses = ['Apache-2.0']
-        labels = ['micrometer', 'jmx', 'kafka']
-        githubRepo = 'sukhinin/micrometer-binder-jmx'
     }
 }
